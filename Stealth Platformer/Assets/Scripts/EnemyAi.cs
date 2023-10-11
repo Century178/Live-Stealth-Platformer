@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class EnemyAi : MonoBehaviour
+public class EnemyAI : MonoBehaviour
 {
     [SerializeField] private float speed = 20f;
 
@@ -20,6 +21,7 @@ public class EnemyAi : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        Time.timeScale = 1;
     }
 
     void Update()
@@ -41,6 +43,8 @@ public class EnemyAi : MonoBehaviour
         if (collision.GetComponent<Player>())
         {
             noticeEffect.Play();
+            Time.timeScale = 0;
+            StartCoroutine(Lose());
         }
     }
 
@@ -54,5 +58,11 @@ public class EnemyAi : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(groundCheck.position, groundCheck.position + Vector3.down * groundCheckDistance);
+    }
+
+    private IEnumerator Lose()
+    {
+        yield return new WaitForSecondsRealtime(1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

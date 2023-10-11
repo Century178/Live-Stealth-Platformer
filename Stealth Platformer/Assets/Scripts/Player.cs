@@ -16,7 +16,8 @@ public class Player : MonoBehaviour
     [SerializeField] LayerMask ground_layer;
     bool grounded;
 
-    Collider2D enemyInFront;
+    Collider2D[] enemiesInFront;
+    [SerializeField] private LayerMask enemyLayer;
 
     [SerializeField] Transform Ground_Check;
     private Rigidbody2D rb;
@@ -41,12 +42,15 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && grounded && Mathf.Abs(rb.velocity.y) < maximumYVelocity)
+        Vector2 inFrontOfPlayer = new Vector2(transform.position.x + (1 * Mathf.Sign(rb.velocity.x)), transform.position.y);
+        enemiesInFront = Physics2D.OverlapBoxAll(inFrontOfPlayer, new Vector2(2, 1), 0, enemyLayer);
+
+        if (Input.GetButtonDown("Up") && grounded && Mathf.Abs(rb.velocity.y) < maximumYVelocity)
         {
             rb.velocity += Vector2.up * jump_force;
         }
 
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetButtonDown("Down"))
         {
             RaycastHit2D hit = Physics2D.CircleCast(Ground_Check.position, colider.size.x * 0.5f, Vector2.down, platformDistance, ground_layer);
             if (hit.point != Vector2.zero)
@@ -57,15 +61,15 @@ public class Player : MonoBehaviour
 
         }
         //stabbing in the back
-        if (Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             slashingAnimator.SetTrigger("slash");
-            if (enemyInFront != null)
+            foreach (Collider2D enemy in enemiesInFront)
             {
-                if (enemyInFront.transform.localEulerAngles.y < 5 && facingRight == true)//you are both looking right
-                    Destroy(enemyInFront.gameObject);
-                else if (enemyInFront.transform.localEulerAngles.y > 170 && facingRight == false)//you are both looking left
-                    Destroy(enemyInFront.gameObject);
+                if (enemy.transform.localEulerAngles.y < 5 && facingRight == true)//you are both looking right
+                    Destroy(enemy.gameObject);
+                else if (enemy.transform.localEulerAngles.y > 170 && facingRight == false)//you are both looking left
+                    Destroy(enemy.gameObject);
             }
         }
 
@@ -83,17 +87,6 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(0.05f);// wait a bit
         }
         platformColider.enabled = true;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.GetComponent<EnemyAi>())
-            enemyInFront = collision;
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision == enemyInFront)
-            enemyInFront = null;
     }
 
     private void Flip()
