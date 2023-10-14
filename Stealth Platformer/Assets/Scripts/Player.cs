@@ -34,14 +34,13 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         grounded = Physics2D.OverlapCircle(Ground_Check.position, check_radius, ground_layer);
-        horInput = Input.GetAxis("Horizontal");
-
         rb.velocity = new Vector2(horInput * speed, rb.velocity.y);
-
     }
 
     void Update()
     {
+        horInput = Input.GetAxis("Horizontal");
+
         Vector2 inFrontOfPlayer = new Vector2(transform.position.x + (1 * Mathf.Sign(rb.velocity.x)), transform.position.y);
         enemiesInFront = Physics2D.OverlapBoxAll(inFrontOfPlayer, new Vector2(2, 1), 0, enemyLayer);
 
@@ -78,6 +77,7 @@ public class Player : MonoBehaviour
         else if (horInput < 0 && facingRight == true) // going left but looking right
             Flip();
     }
+
     IEnumerator DeactivatePlatform(Collider2D platformColider)
     {
         platformColider.enabled = false;

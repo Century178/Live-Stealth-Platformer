@@ -7,9 +7,7 @@ public class EnemyAI : MonoBehaviour
 {
     [SerializeField] private float speed = 20f;
 
-
     [SerializeField] private ParticleSystem noticeEffect;
-
 
     [SerializeField] private LayerMask groundLayer;
 
@@ -18,41 +16,32 @@ public class EnemyAI : MonoBehaviour
 
     Rigidbody2D rb;
 
-    void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        Time.timeScale = 1;
     }
 
-    void Update()
+    private void FixedUpdate()
     {
-
         if (Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, groundLayer) == false)
             Flip();
 
         rb.AddForce(transform.right * speed);
-
     }
+
     private void Flip()
     {
         transform.Rotate(Vector2.up * 180);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.GetComponent<Player>())
-        {
-            noticeEffect.Play();
-            Time.timeScale = 0;
-            StartCoroutine(Lose());
-        }
-    }
-
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.GetComponent<Player>())
-            Destroy(collision.gameObject);
+        if (collision.gameObject.CompareTag("Player")) InitiateLoss();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player")) InitiateLoss();
     }
 
     private void OnDrawGizmos()
@@ -60,9 +49,17 @@ public class EnemyAI : MonoBehaviour
         Gizmos.DrawLine(groundCheck.position, groundCheck.position + Vector3.down * groundCheckDistance);
     }
 
+    private void InitiateLoss()
+    {
+        noticeEffect.Play();
+        Time.timeScale = 0;
+        StartCoroutine(Lose());
+    }
+
     private IEnumerator Lose()
     {
         yield return new WaitForSecondsRealtime(1);
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
