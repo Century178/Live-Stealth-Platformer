@@ -4995,8 +4995,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8855945460662364408}
   - component: {fileID: 8855945460662364410}
+  - component: {fileID: 7323916595854287211}
   - component: {fileID: 8855945460662364411}
-  - component: {fileID: 8855945460662364407}
   - component: {fileID: 8855945460662364406}
   m_Layer: 7
   m_Name: Enemy
@@ -5040,6 +5040,25 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
+--- !u!114 &7323916595854287211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8855945460662364413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a39d6d8f2dab0f41b7a8c489db81546, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  noticeEffect: {fileID: 8855945459971232798}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  groundCheck: {fileID: 8855945460516228322}
+  groundCheckDistance: 0.6
 --- !u!50 &8855945460662364411
 Rigidbody2D:
   serializedVersion: 4
@@ -5061,25 +5080,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &8855945460662364407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8855945460662364413}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a39d6d8f2dab0f41b7a8c489db81546, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 2
-  noticeEffect: {fileID: 8855945459971232798}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 1
-  groundCheck: {fileID: 8855945460516228322}
-  groundCheckDistance: 1
 --- !u!61 &8855945460662364406
 BoxCollider2D:
   m_ObjectHideFlags: 0
