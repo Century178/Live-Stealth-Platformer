@@ -5052,7 +5052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a39d6d8f2dab0f41b7a8c489db81546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 30
   noticeEffect: {fileID: 8855945459971232798}
   groundLayer:
     serializedVersion: 2
