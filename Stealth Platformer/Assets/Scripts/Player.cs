@@ -8,7 +8,6 @@ public class Player : MonoBehaviour
     [SerializeField] float speed = 5f;
 
     [SerializeField] float jump_force = 5f;
-    [SerializeField] float maximumYVelocity = 0.5f;
 
     [SerializeField] float platformDistance = 1.2f;
 

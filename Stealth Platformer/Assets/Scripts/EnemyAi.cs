@@ -10,11 +10,12 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private ParticleSystem noticeEffect;
 
     [SerializeField] private LayerMask groundLayer;
-
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckDistance = 0.4f;
 
-    Rigidbody2D rb;
+    [SerializeField] private float wallCheckDistance = 0.9f;
+
+    private Rigidbody2D rb;
 
     private void Awake()
     {
@@ -23,8 +24,11 @@ public class EnemyAI : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, groundLayer) == false)
+        if (Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, groundLayer) == false ||
+            Physics2D.Raycast(transform.position, transform.right, wallCheckDistance, groundLayer))
+        {
             Flip();
+        }
 
         rb.AddForce(transform.right * speed);
     }
@@ -47,6 +51,7 @@ public class EnemyAI : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(groundCheck.position, groundCheck.position + Vector3.down * groundCheckDistance);
+        Gizmos.DrawLine(transform.position, transform.position + transform.right * wallCheckDistance);
     }
 
     private void InitiateLoss()
