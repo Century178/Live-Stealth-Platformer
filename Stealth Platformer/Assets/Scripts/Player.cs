@@ -5,20 +5,20 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private float horInput;
-    [SerializeField] float speed = 5f;
+    [SerializeField] private float speed = 5f;
 
-    [SerializeField] float jump_force = 5f;
+    [SerializeField] private float jump_force = 5f;
 
-    [SerializeField] float platformDistance = 1.2f;
+    [SerializeField] private float platformDistance = 1.2f;
 
-    [SerializeField] float check_radius = 0.4f;
-    [SerializeField] LayerMask ground_layer;
-    bool grounded;
+    [SerializeField] private float check_radius = 0.4f;
+    [SerializeField] private LayerMask ground_layer;
+    private bool grounded;
 
-    Collider2D[] enemiesInFront;
+    private Collider2D[] enemiesInFront;
     [SerializeField] private LayerMask enemyLayer;
 
-    [SerializeField] Transform Ground_Check;
+    [SerializeField] private Transform Ground_Check;
     [SerializeField] private CapsuleCollider2D colider;
     [SerializeField] private Animator slashingAnimator;
 
