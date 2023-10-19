@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    private void Update()
     {
         horInput = Input.GetAxis("Horizontal");
         if (horInput != 0)
@@ -95,7 +95,7 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector2(horInput * speed, rb.velocity.y);
     }
 
-    IEnumerator DeactivatePlatform(Collider2D platformColider)
+    private IEnumerator DeactivatePlatform(Collider2D platformColider)
     {
         platformColider.enabled = false;
         rb.AddForce(Vector2.down * 3f);
